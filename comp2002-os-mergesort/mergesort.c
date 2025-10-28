@@ -8,31 +8,50 @@
 #include <stdlib.h> /* for malloc */
 #include <string.h> /* for memcpy */
 
-/* this function will be called by mergesort() and also by parallel_mergesort().
- */
-void merge(int leftstart, int leftend, int rightstart, int rightend) {
-  //   int i = leftstart;
-  //   while (leftstart <= leftend && rightstart <= rightend) {
-  //     if (A[leftstart] <= A[rightstart]) {
-  //       B[i] = A[leftstart];
-  //       leftstart++;
-  //     } else {
-  //       B[i] = A[leftstart];
-  //       rightstart++;
-  //     }
-  //     i++;
-  //   }
+/* this function will be called by mergesort() and also by parallel_mergesort(). */
+void merge(int leftstart, int leftend, int rightstart, int rightend){
+	// Initialize indices: left_idx tracks left subarray, right_idx tracks right subarray, temp_idx tracks position in temp array
+	int left_idx = leftstart;
+	int right_idx = rightstart;
+	int temp_idx = leftstart;
+
+	// Merge the two sorted halves into the temp array
+	while (left_idx <= leftend && right_idx <= rightend) {
+		if (A[left_idx] <= A[right_idx]) {
+			B[temp_idx++] = A[left_idx++];
+		} else {
+			B[temp_idx++] = A[right_idx++];
+		}
+	}
+
+	// Copy remaining elements from the left half
+	while (left_idx <= leftend) {
+		B[temp_idx++] = A[left_idx++];
+	}
+
+	// Copy remaining elements from the right half
+	while (right_idx <= rightend) {
+		B[temp_idx++] = A[right_idx++];
+	}
+
+	// Copy merged result back into the original array (no cast)
+	memcpy(&A[leftstart], &B[leftstart], (rightend - leftstart + 1) * sizeof(int));
+
+	// or with cast:
+	// size_t length = (size_t)(rightend - leftstart + 1);
+	// memcpy(&A[leftstart], &B[leftstart], length * sizeof(int));
 }
 
 /* this function will be called by parallel_mergesort() as its base case. */
-void my_mergesort(int left, int right) {
-  //   if (left < right) {
-  //     int mid = left + (right - left) / 2;
-  //     my_mergesort(left, mid);
-  //     my_mergesort(mid + 1, right);
-
-  //     merge(left, mid, mid + 1, right);
-  //   }
+void my_mergesort(int left, int right){
+	if (left >= right) { // Base case, if the subarray has 1 or no elements then it's already sorted.
+		return;
+	}
+	
+	int middle = (left + right) / 2; // Find the middle index to divide the array into two halves. 
+	my_mergesort(left, middle); // Recursively sort the left half. Left is the same as leftstart, middle is leftend.
+	my_mergesort(middle + 1, right); // Recursively sort the right half. middle + 1 is rightstart, right is rightend.
+	merge(left, middle, middle + 1, right); // Merge the two sorted halves.
 }
 
 /* this function will be called by the testing program. */
@@ -76,14 +95,14 @@ void* parallel_mergesort(void* arg) {
 }
 
 /* we build the argument for the parallel_mergesort function. */
-struct argument* buildArgs(int left, int right, int level) {
-  // Allocate memory for arguments struct
-  struct argument* args = (struct argument*)malloc(sizeof(struct argument));
-
-  // Initialise data members
-  args->left = left;
-  args->right = right;
-  args->level = level;
-
-  return args;
+struct argument * buildArgs(int left, int right, int level){
+	struct argument *arg = malloc(sizeof(struct argument)); // Allocate memory for the argument struct.
+	
+	// Fill in the fields of arg.
+	arg->left = left;
+	arg->right = right;
+	arg->level = level;
+	
+	// Return the pointer to the argument struct.
+	return arg;
 }

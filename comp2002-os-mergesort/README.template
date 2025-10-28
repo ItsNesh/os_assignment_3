@@ -2,20 +2,24 @@ README.template
 
 ## Project Number/Title 
 
-* Authors: Your Name, and your group members’ names
-* Group name: Your Group Name
+* Authors: Christian Nesci, Nicholas Bologiannis, Trent Morgan
+* Group name: Group 61
 
-## Overview
+## Overview - Nicholas to complete
 
 Concisely explain what the program does. If this exceeds a couple of
 sentences, you're going too far. Generally, you should be pulling this
 right from the project specification. We don't want you to just cut and
 paste, but paraphrase what is stated in the project specification.
 
-## Manifest
 
-A listing of source files and other non-generated files, and a brief
-(one-line) explanation of the purpose of each file.
+
+## Manifest - Nicholas to complete
+
+Makefile:
+mergesort.c:
+mergesort.h:
+test-mergesort.c:
 
 ## Building the project
 
@@ -55,3 +59,5 @@ If you used any sources outside of the textbook, you should list them here.
 If you looked something up on stackoverflow.com or you use help from AI, and 
 fail to cite it in this section, it will be considered plagiarism and dealt 
 with accordingly. So be safe CITE!
+
+HackerRank 2016, Algorithms: Merge Sort, Youtube, 28th September, viewed October 28 2025, <https://www.youtube.com/watch?v=KF2j-9iSf4Q&t=372s>
