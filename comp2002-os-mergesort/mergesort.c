@@ -103,6 +103,8 @@ void* parallel_mergesort(void* arg) {
   // 5. Free the memory
   free(leftThreadArgs);
   free(rightThreadArgs);
+
+  return args;
 }
 
 /* we build the argument for the parallel_mergesort function. */
