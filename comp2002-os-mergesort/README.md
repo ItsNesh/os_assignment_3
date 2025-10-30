@@ -44,13 +44,13 @@ Run the executable: './test-mergesort \<input size\> \<cutoff level\> \<seed\>'
 
 For example: ./test-mergesort 100000000 4 1234
 
-<input size>: is the size of the array, containing the numbers to be sorted.
+\<input size\>: is the size of the array, containing the numbers to be sorted.
 
-<cutoff level>: is how many levels the subarrays will be handled concurrently.
+\<cutoff level\>: is how many levels the subarrays will be handled concurrently.
 
 Hence, a higher cuttoff level means a larger amount of threads. 
 
-<seed>: is a number used to randomly generate the sorting array numbers.
+\<seed\>: is a number used to randomly generate the sorting array numbers.
 
 This program will take the starting array of numbers and create a new thread to handle each
 new subarray. This means the ordering computations can be done concurrently, making it faster 
