@@ -5,11 +5,11 @@ README.template
 * Authors: Christian Nesci, Nicholas Bologiannis, Trent Morgan
 * Group name: Group 61
 
-## Overview - Nicholas to complete
+## Overview - Nicholas
 This program implements a parallel merge sort algorithm using the pthread library to sort a randomly-generated array of user specificed size, with a random user specified seed to ensure reproducible test results. It first divides the array into smaller subarrays and creates multiple threads (up to a user specified cutoff level) to sort them concurrently, then merges them back together once sorted. Using a multi-threaded approach allows the program to use multiple CPU cores to achieve at least a 2x performance speedup when compared to single threaded merge sort.
 
 
-## Manifest - Nicholas to complete
+## Manifest - Nicholas
 
 A listing of source files and other non-generated files, and a brief
 (one-line) explanation of the purpose of each file.
