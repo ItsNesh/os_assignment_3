@@ -65,44 +65,41 @@ void* parallel_mergesort(void* arg) {
   int right = args->right;
   int level = args->level;
 
-  // 2. If base case (when the max number of levels) is reached, call
-  // my_mergesort()
+  // 2. If base case (the subarray has 1 or no elements) is reached, then exit
+  if (left >= right) {
+    return args;
+  }
+
+  // 3. If cutoff level is reached, then sort the remaining numbers sequentially
   if (level >= cutoff) {
     my_mergesort(left, right);
     return args;
   }
 
-  // 3. Otherwise, create two new children threads for the next level
+  // 4. Otherwise, create two new children threads for the next level
   pthread_t leftThread, rightThread;
+  struct argument *leftThreadArgs, *rightThreadArgs;
 
-  struct argument* leftThreadArgs =
-      (struct argument*)malloc(sizeof(struct argument));
-  struct argument* rightThreadArgs =
-      (struct argument*)malloc(sizeof(struct argument));
-
+  // Find the middle index to divide the array into two halves.
   int middle = (left + right) / 2;
   // Left thread gets the indexes of the array that are on the left half
-  leftThreadArgs->left = left;
-  leftThreadArgs->right = middle;
-  leftThreadArgs->level = level + 1;
+  leftThreadArgs = buildArgs(left, middle, level + 1);
   pthread_create(&leftThread, NULL, parallel_mergesort, (void*)leftThreadArgs);
   // Right thread gets the indexes of the array that are on the right half
-  rightThreadArgs->left = middle + 1;
-  rightThreadArgs->right = right;
-  rightThreadArgs->level = level + 1;
+  rightThreadArgs = buildArgs(middle + 1, right, level + 1);
   pthread_create(&rightThread, NULL, parallel_mergesort,
                  (void*)rightThreadArgs);
 
-  // 3. Wait for them to finish
+  // 5. Wait for threads to finish
   pthread_join(leftThread, NULL);
   pthread_join(rightThread, NULL);
 
-  // 4. Merge the two sorted halves
-  merge(left, middle, middle + 1, right);
-
-  // 5. Free the memory
+  // 6. Free the memory
   free(leftThreadArgs);
   free(rightThreadArgs);
+
+  // 7. Merge the two sorted halves
+  merge(left, middle, middle + 1, right);
 
   return args;
 }
