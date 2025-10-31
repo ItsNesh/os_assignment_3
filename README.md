@@ -10,11 +10,11 @@ This program implements a parallel merge sort algorithm using the pthread librar
 
 ## Manifest - Nicholas
 
-Makefile: Build configuration file that compiles the source files and links them to create the test-mergesort executable.
-mergesort.c: C file that implements the parallel mergesort algorithm.
-mergesort.h: Header file that defines data strcutures, function prototypes, and global variables for the parallel mergesort implementation.
-test-mergesort.c: C file that tests and benchmarks the parallel mergesort implementation by generating a random array, running the sorting algorithm and then measuring execution time and verifying correctness.
-run_tests.sh: Bash script that runs all the tests documented in the testing section.
+- Makefile: Build configuration file that compiles the source files and links them to create the test-mergesort executable.
+- mergesort.c: C file that implements the parallel mergesort algorithm.
+- mergesort.h: Header file that defines data strcutures, function prototypes, and global variables for the parallel mergesort implementation.
+- test-mergesort.c: C file that tests and benchmarks the parallel mergesort implementation by generating a random array, running the sorting algorithm and then measuring execution time and verifying correctness.
+- run_tests.sh: Bash script that runs all the tests documented in the testing section.
 
 ## Building the project - Trent
 
@@ -39,7 +39,7 @@ Hence, a higher cuttoff level means a larger amount of threads.
 
 \<seed\>: is a number used to randomly generate the sorting array numbers.
 
-Alternatively, if you are on a Linux system (including WSL) you may run the bash script to run the preconfigured test cases outlined in this README: `./test.sh`
+Alternatively, if you are on a Linux system (including WSL) you may run the bash script `./test.sh` to run the preconfigured test cases outlined in this README.
 Note: You may need to make this file executable first: `chmod u+x test.sh`
 
 This program will take the starting array of numbers and create a new thread to handle each
@@ -79,8 +79,8 @@ The main performance tests were run with an array size of n=100,000,000 and seed
 ./test-mergesort 100000000 8 1234
 ```
 
-| Cutoff Level | Execution Time (s) | Speedup |
-|--------------|--------------------|---------|
+| Cutoff Level | Execution Time | Speedup |
+|--------------|----------------|---------|
 | 0 (sequential) | 9.98 | 1.00x (baseline) |
 | 1 | 5.09 | 1.96x |
 | 2 | 2.63 | 3.79x |
@@ -111,8 +111,8 @@ Tested with an array size of n=10,000,000 using random seeds at cutoff level 4:
 ./test-mergesort 10000000 4 2469
 ```
 
-| Seed | Result | Execution Time (s) |
-|------|--------|-------------------|
+| Seed | Result | Execution Time |
+|------|--------|----------------|
 | 1234 | PASS | 0.13 |
 | 5678 | PASS | 0.12 |
 | 1111 | PASS | 0.12 |
@@ -141,15 +141,15 @@ Compared sequential (cutoff=0) vs parallel (cutoff=4) performance across differe
 ./test-mergesort 100000000 4 1234
 ```
 
-| Array Size | Sequential Time (s) | Parallel Time (s) | Speedup |
-|------------|---------------------|-------------------|---------|
+| Array Size | Sequential Time | Parallel Time | Speedup |
+|------------|-----------------|---------------|---------|
 | 1,000 | 0.00 | 0.00 | N/A (too small) |
 | 100,000 | 0.01 | 0.00 | N/A |
 | 1,000,000 | 0.08 | 0.02 | 4.00x |
 | 10,000,000 | 0.95 | 0.13 | 7.31x |
 | 100,000,000 | 10.07 | 1.02 | 9.87x |
 
-- Speedup scales well with array size. Small arrays show minimal benefit due to the threading overhead.
+Speedup scales well with array size. Small arrays show minimal benefit due to the threading overhead.
 
 ### Excessive threading
 Some additional tests not included in the bash script were also run to check for the maximum cutoff:
